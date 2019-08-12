@@ -1,18 +1,17 @@
 {
   "name": "javascript-exercises",
   "version": "1.0.0",
-  "description": "",
+  "description": "Learning javascript through simple a exercises and tests",
   "main": "index.html",
   "scripts": {
-    "start": "parcel index.html test-report.html --open",
+    "start": "parcel index.html --open",
     "build": "parcel build index.html test-report.html"
   },
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "7.2.0",
     "parcel-bundler": "^1.6.1",
-    "jest": "24.8.0",
-    "jest-html-reporter": "2.5.0"
+    "jest": "24.8.0"
   },
-  "keywords": ["javascript", "exercises"]
+  "keywords": []
 }

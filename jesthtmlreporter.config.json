@@ -1,6 +1,0 @@
-{
-  "pageTitle": "Test results",
-  "outputPath": "test-report.html",
-  "includeFailureMsg": true,
-  "styleOverridePath": "src/style.css"
-}
