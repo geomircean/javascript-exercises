@@ -3,7 +3,8 @@ export function iterate() {
     1. initialise an Array of length 7
     2. create another array with forEach, based on your initial array, where
      you make all values in the array string
-    3. convert the values of the initial array to options  
+    3. convert the values of the initial array to an array that has contains a list of 
+     objects having having the keys 'index' and 'value'
   */
   const intitialArray = [];
   const forEachArray = [];

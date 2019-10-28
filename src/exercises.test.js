@@ -70,11 +70,19 @@ describe('objects', () => {
 });
 
 describe('arrays', () => {
-  test('allowedTypes', () => {
+  test('iterate', () => {
     const { intitialArray, forEachArray, mapArray } = arrays.iterate();
     expect(intitialArray).toHaveLength(7);
     expect(forEachArray).toHaveLength(7);
     expect(mapArray).toHaveLength(7);
+    expect(mapArray).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          index: expect.any(Number),
+          value: expect.anything()
+        })
+      ])
+    );
   });
 
   test('sum', () => {
