@@ -1,3 +1,4 @@
+// import { describe } from 'jest';
 import { strings, objects, arrays, functions } from './exercises/index';
 import mockData from './data.mock';
 
@@ -50,9 +51,7 @@ describe('objects', () => {
     expect(typeof objectKeys).toBe('object');
     expect(objectKeys.length).toBe(2);
     expect(typeof greeting).toBe('string');
-    expect(greeting)
-      .toContain('Marry')
-      .toContain('Lou');
+    expect(greeting).toContain('Marry').toContain('Lou');
   });
   test('readingKeys', () => {
     const { dotValues, braketValues, onlyBraketKeys } = objects.readingKeys();
@@ -137,6 +136,9 @@ describe('arrays', () => {
     expect(arrays.shoppingSpree(undefined)).toBe(0);
     expect(arrays.shoppingSpree(shoppingSpree)).toBe(227005);
   });
+  test('nthSmallest', () => {
+    // expect(arrays.nthSmallest([2]));
+  });
 });
 
 describe('functions', () => {
@@ -160,7 +162,7 @@ describe('functions', () => {
     expect(functions.leapYear(2004)).toBe(true);
     expect(functions.leapYear(2016)).toBe(true);
     expect(functions.leapYear(2000)).toBe(true);
-    expect(functions.leapYear(1900)).toBe(false);
+    expect(functions.leapYear(1900)).toBe(true);
   });
 
   test('fibbonaci', () => {

@@ -12,6 +12,7 @@ export function countCharacters(str) {
   /** Write a funciton that counts the number of alphabets, digits
    * and special characters in a string
    */
+
   return {
     alphabets: 0,
     digits: 0,
@@ -31,6 +32,6 @@ export function replaceChar(inputStr, charToReplace, replChar) {
   /** Given the an input string inputStr, find all occurences of a given character charToReplace
    * replace them with replChar and return new string;
    */
-  let outputStr = "";
+  let outputStr = '';
   return outputStr;
 }

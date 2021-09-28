@@ -19,3 +19,5 @@ export function fibbonaci(n) {
   /** TODO: compute the first n numbers of the fibbonaci sequence */
   return [];
 }
+
+// console.log(fibbonaci(5));

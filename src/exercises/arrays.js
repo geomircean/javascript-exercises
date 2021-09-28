@@ -57,3 +57,11 @@ export function shoppingSpree(whishlist) {
    * whishlist item: { title: "4 carat diamond ring", price: 45000 }
    */
 }
+
+export function nthSmallest(array, n) {
+  /**
+   * TODO:
+   * Given an array of minimum lenght 3, find the Nth smallest number
+   * The array can contain a mixture of positives, negatives or zeroes
+   */
+}
