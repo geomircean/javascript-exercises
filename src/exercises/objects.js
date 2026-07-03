@@ -1,6 +1,6 @@
 export function displayName() {
   const obj = {
-    firstName: 'Marry',
+    firstName: 'Mary',
     lastName: 'Lou'
   };
   /**TODO:
@@ -24,14 +24,14 @@ export function readingKeys() {
   };
   /** TODO:
    * 1 Read values from obj using dot notation
-   * 2 Read values from obj using brakets
-   * 3 List all keys that can be read only using brackts
+   * 2 Read values from obj using brackets
+   * 3 List all keys that can be read only using brackets
    */
 
   return {
     dotValues: [],
-    braketValues: [],
-    onlyBraketKeys: []
+    bracketValues: [],
+    onlyBracketKeys: []
   };
 }
 

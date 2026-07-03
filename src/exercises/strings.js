@@ -9,7 +9,7 @@ export function reverseString(str) {
 }
 
 export function countCharacters(str) {
-  /** Write a funciton that counts the number of alphabets, digits
+  /** Write a function that counts the number of alphabets, digits
    * and special characters in a string
    */
 
@@ -29,7 +29,7 @@ export function vowelsAndConsonants(str) {
 }
 
 export function replaceChar(inputStr, charToReplace, replChar) {
-  /** Given the an input string inputStr, find all occurences of a given character charToReplace
+  /** Given an input string inputStr, find all occurrences of a given character charToReplace
    * replace them with replChar and return new string;
    */
   let outputStr = '';

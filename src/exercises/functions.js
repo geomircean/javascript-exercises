@@ -15,9 +15,9 @@ export function callMeBack(a, b, fn) {
    */
 }
 
-export function fibbonaci(n) {
-  /** TODO: compute the first n numbers of the fibbonaci sequence */
+export function fibonacci(n) {
+  /** TODO: compute the first n numbers of the fibonacci sequence */
   return [];
 }
 
-// console.log(fibbonaci(5));
+// console.log(fibonacci(5));
