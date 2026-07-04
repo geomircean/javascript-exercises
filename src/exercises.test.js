@@ -1,5 +1,5 @@
 // import { describe } from 'jest';
-import { strings, objects, arrays, functions } from './exercises/index';
+import { strings, objects, arrays, functions, async, classes, errors, modern } from './exercises/index';
 import mockData from './data.mock';
 
 // Input-guarding convention: every array- or string-consuming exercise treats
@@ -219,5 +219,153 @@ describe('functions', () => {
     const callback = jest.fn();
     functions.callMeBack(12, 13, callback);
     expect(callback).toHaveBeenCalledWith(25);
+  });
+});
+
+describe('async', () => {
+  test('delay', async () => {
+    expect(async.delay(0, 'x')).toBeInstanceOf(Promise);
+    expect(await async.delay(10, 'ping')).toBe('ping');
+    expect(await async.delay(10, 42)).toBe(42);
+  });
+
+  test('resolveAll', async () => {
+    expect(await async.resolveAll([])).toEqual([]);
+    expect(await async.resolveAll([Promise.resolve(1), async.delay(5, 2), 3])).toEqual([1, 2, 3]);
+  });
+
+  test('firstToResolve', async () => {
+    expect(await async.firstToResolve([async.delay(30, 'slow'), async.delay(5, 'fast')])).toBe('fast');
+  });
+
+  test('retry resolves once the function succeeds', async () => {
+    let calls = 0;
+    const failsOnce = () => {
+      calls += 1;
+      return calls < 2 ? Promise.reject(new Error('flaky')) : Promise.resolve('ok');
+    };
+    expect(await async.retry(failsOnce, 3)).toBe('ok');
+    expect(calls).toBe(2);
+  });
+
+  test('retry rejects after exhausting every attempt', async () => {
+    const alwaysFails = () => Promise.reject(new Error('nope'));
+    let caught;
+    try {
+      await async.retry(alwaysFails, 3);
+    } catch (error) {
+      caught = error;
+    }
+    expect(caught).toBeInstanceOf(Error);
+  });
+
+  test('sumAsync', async () => {
+    expect(async.sumAsync(1, 2)).toBeInstanceOf(Promise);
+    expect(await async.sumAsync(12, 13)).toBe(25);
+  });
+});
+
+describe('classes', () => {
+  test('Rectangle', () => {
+    const rect = new classes.Rectangle(3, 4);
+    expect(rect).toBeInstanceOf(classes.Rectangle);
+    expect(rect.area()).toBe(12);
+    expect(rect.perimeter()).toBe(14);
+    expect(rect.isSquare).toBe(false);
+    expect(new classes.Rectangle(5, 5).isSquare).toBe(true);
+  });
+
+  test('Rectangle.fromSquare', () => {
+    const sq = classes.Rectangle.fromSquare(5);
+    expect(sq).toBeInstanceOf(classes.Rectangle);
+    expect(sq.area()).toBe(25);
+    expect(sq.isSquare).toBe(true);
+  });
+
+  test('Animal and Dog inheritance', () => {
+    expect(new classes.Animal('thing').speak()).toBe('thing makes a sound');
+    const dog = new classes.Dog('Rex');
+    expect(dog).toBeInstanceOf(classes.Animal);
+    expect(dog.speak()).toBe('Rex barks');
+  });
+
+  test('Counter', () => {
+    const c = new classes.Counter();
+    expect(c.increment()).toBe(c); // returns `this` so calls can be chained
+    c.increment();
+    expect(c.value).toBe(2);
+  });
+});
+
+describe('errors', () => {
+  test('safeJsonParse', () => {
+    expect(errors.safeJsonParse('{"a":1}')).toEqual({ a: 1 });
+    expect(errors.safeJsonParse('[1,2,3]')).toEqual([1, 2, 3]);
+    expect(errors.safeJsonParse('not json')).toBe(null);
+  });
+
+  test('divide', () => {
+    expect(errors.divide(10, 2)).toBe(5);
+    expect(errors.divide(9, 3)).toBe(3);
+    expect(() => errors.divide(1, 0)).toThrow('Cannot divide by zero');
+  });
+
+  test('ValidationError and validateAge', () => {
+    expect(errors.validateAge(30)).toBe(30);
+    expect(errors.validateAge(0)).toBe(0);
+    let caught;
+    try {
+      errors.validateAge(-5);
+    } catch (error) {
+      caught = error;
+    }
+    expect(caught).toBeInstanceOf(errors.ValidationError);
+    expect(caught).toBeInstanceOf(Error);
+    expect(caught.field).toBe('age');
+  });
+
+  test('withFallback', () => {
+    expect(errors.withFallback(() => 42, 0)).toBe(42);
+    expect(
+      errors.withFallback(() => {
+        throw new Error('boom');
+      }, 'default')
+    ).toBe('default');
+  });
+});
+
+describe('modern', () => {
+  test('swap', () => {
+    expect(modern.swap([1, 2])).toEqual([2, 1]);
+    expect(modern.swap(['a', 'b'])).toEqual(['b', 'a']);
+  });
+
+  test('mergeConfig', () => {
+    expect(modern.mergeConfig({ a: 1, b: 2 }, { b: 3 })).toEqual({ a: 1, b: 3 });
+    expect(modern.mergeConfig({}, { x: 1 })).toEqual({ x: 1 });
+    const defaults = { a: 1 };
+    modern.mergeConfig(defaults, { a: 9 });
+    expect(defaults).toEqual({ a: 1 }); // must not mutate its arguments
+  });
+
+  test('tally', () => {
+    expect(modern.tally([])).toEqual({});
+    expect(modern.tally(['a', 'b', 'a'])).toEqual({ a: 2, b: 1 });
+  });
+
+  test('unique', () => {
+    expect(modern.unique([1, 1, 2, 3, 3])).toEqual([1, 2, 3]);
+    expect(modern.unique(['a', 'a', 'b'])).toEqual(['a', 'b']);
+  });
+
+  test('frequency', () => {
+    const result = modern.frequency(['x', 'y', 'x']);
+    expect(result).toBeInstanceOf(Map);
+    expect(result.get('x')).toBe(2);
+    expect(result.get('y')).toBe(1);
+  });
+
+  test('invert', () => {
+    expect(modern.invert({ a: '1', b: '2' })).toEqual({ '1': 'a', '2': 'b' });
   });
 });
